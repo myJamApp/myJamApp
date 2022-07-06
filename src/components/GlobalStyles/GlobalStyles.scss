@@ -1,10 +1,17 @@
 @import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100;200;300;500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
 :root {
+    // Color
+    --primaryColor: #5c76d7;
     --greenColor: #1db954;
     --textColor: #333;
     --white: #fff;
     --black: black;
+
+    // Fonts
+    --font-family: 'Lexend Deca', sans-serif;
 }
 
 * {
@@ -55,4 +62,32 @@ a {
 .tippy-box[data-placement^='bottom'] > .tippy-arrow:before {
     color: rgba(84, 84, 84, 0.92);
     margin-top: -1px;
+}
+
+// Logo
+
+.logo {
+    font-family: 'Lobster', cursive;
+    color: var(--primaryColor);
+}
+
+// Button
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    height: 50px;
+    min-width: 200px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in;
+
+    + .btn {
+        margin-left: 16px;
+    }
+
+    &:hover {
+        background-color: #d2e3fc;
+    }
 }
