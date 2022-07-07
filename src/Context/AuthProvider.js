@@ -22,7 +22,7 @@ function AuthProvider({ children }) {
             }
 
             setIsLoading(false);
-            navigate('/login');
+            navigate('/login', { replace: true });
         });
 
         return () => {
