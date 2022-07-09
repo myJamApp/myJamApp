@@ -1,0 +1,303 @@
+.sideBar__wrapper {
+    height: 100vh;
+    // border: 1px solid red;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: linear-gradient(#191b1c, #181a1b);
+    max-height: 100%;
+    overflow: hidden;
+
+    &:hover {
+        overflow-y: overlay;
+        transition: all 0.3s ease-in;
+
+        // Scrollbar
+        &::-webkit-scrollbar {
+            border-radius: 0;
+            width: 8px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 4px;
+            background-color: var(--hoverColor);
+        }
+
+        &::-webkit-scrollbar-track {
+            border-radius: 0;
+            background-color: rgba(0, 0, 0, 0);
+        }
+    }
+}
+
+.sideBar__container {
+    height: 100%;
+    width: 80%;
+}
+
+// User Info
+
+.userInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #27282f;
+    border-radius: 14px;
+    padding: 10px;
+    margin: 20px auto;
+
+    .userAvatar {
+        display: flex;
+        flex: 1;
+        justify-content: center;
+
+        span {
+            border-radius: 10px;
+        }
+    }
+
+    .userInfo__text {
+        flex: 3;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 10px;
+
+        h1 {
+            margin: 0;
+            line-height: 1;
+            font-size: 22px;
+            color: var(--white);
+        }
+
+        span {
+            color: var(--white);
+            font-size: 10px;
+            font-weight: 100;
+        }
+    }
+
+    .userOptions {
+        display: flex;
+        flex: 1;
+        justify-content: center;
+        color: var(--white);
+    }
+}
+
+// Options
+.options {
+    margin: 10px auto;
+
+    .allUpdate,
+    .members,
+    .settings {
+        color: var(--white);
+        display: flex;
+        padding: 10px;
+        margin: 0 -10px 4px;
+        border-radius: 10px;
+        transition: color 0.3s ease-in;
+        cursor: pointer;
+
+        &:hover {
+            // color: #1488be;
+            color: var(--primaryColor);
+        }
+    }
+
+    .icon {
+        display: flex;
+        flex: 1;
+        font-size: 20px;
+        align-items: center;
+    }
+
+    .text {
+        display: flex;
+        flex: 5;
+    }
+
+    .numberUpdates {
+        flex: 1;
+
+        .number {
+            display: flex;
+            background-color: #242525;
+            font-size: 10px;
+            border-radius: 50px;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+// Channel
+
+.channel {
+    .roomlist {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .generalChat,
+    .designSupport,
+    .productTeam {
+        color: var(--white);
+        display: flex;
+        padding: 10px 10px 10px 10px;
+        border-radius: 12px;
+        transition: background-color 0.3s ease-in;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #27282f;
+        }
+    }
+
+    .roomIcon {
+        display: flex;
+        flex: 1;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+    }
+
+    .roomName {
+        display: flex;
+        flex: 5;
+        font-size: 16px;
+        margin-left: 4px;
+    }
+
+    .numberMessage {
+        display: flex;
+        flex: 1;
+        font-size: 10px;
+        justify-content: center;
+        align-items: center;
+        background-color: #242525;
+        border-radius: 50px;
+    }
+
+    .addRoom {
+        display: flex;
+        color: var(--white);
+        padding: 10px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        transition: background-color 0.3s ease-in;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #27282f;
+        }
+    }
+
+    .iconAdd {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 10px 0 0;
+        padding: 4px 6px 4px 4px;
+        background-color: #242525;
+        border-radius: 10px;
+    }
+
+    .addRoom {
+        span {
+            display: flex;
+            flex: 1;
+            font-size: 16px;
+            padding-left: 2px;
+            align-items: center;
+        }
+    }
+}
+
+// Message
+
+.messages {
+    .friend1,
+    .friend2,
+    .addFriend {
+        display: flex;
+        color: var(--white);
+        padding: 10px 10px 10px 10px;
+        border-radius: 12px;
+        transition: background-color 0.3s ease-in;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #27282f;
+        }
+    }
+
+    .fiendAvatar {
+        display: flex;
+        flex: 1;
+    }
+
+    .friendName {
+        display: flex;
+        flex: 5;
+        align-items: center;
+        margin-left: 7px;
+    }
+
+    .space {
+        display: flex;
+        flex: 1;
+    }
+
+    .addFriend {
+        display: flex;
+        color: var(--white);
+        padding: 10px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        transition: background-color 0.3s ease-in;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #27282f;
+        }
+    }
+
+    .iconAdd {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 10px 0 0;
+        padding: 4px 6px 4px 4px;
+        background-color: #242525;
+        border-radius: 10px;
+    }
+
+    .addFriend {
+        span {
+            display: flex;
+            flex: 1;
+            font-size: 16px;
+            padding-left: 2px;
+            align-items: center;
+        }
+    }
+}
+
+// Log Out
+.logOut {
+    &.logOut {
+        color: var(--white);
+        margin: 20px 0 24px;
+        transition: background-color 0.3s ease-in;
+        border: none;
+    }
+
+    &.logOut:hover {
+        background: var(--hoverColor);
+    }
+}

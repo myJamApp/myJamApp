@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '~/firebase';
-import { Span } from 'antd';
+import { Spin } from 'antd';
 
 const AuthContext = createContext();
 
@@ -19,6 +19,7 @@ function AuthProvider({ children }) {
 
                 setIsLoading(false);
                 navigate('/', { replace: true });
+                return;
             }
 
             setIsLoading(false);
@@ -30,7 +31,7 @@ function AuthProvider({ children }) {
         };
     }, [navigate]);
 
-    return <AuthContext.Provider value={{ user }}>{isLoading ? <Span /> : children}</AuthContext.Provider>;
+    return <AuthContext.Provider value={{ user }}>{isLoading ? <Spin /> : children}</AuthContext.Provider>;
 }
 
 export default AuthProvider;

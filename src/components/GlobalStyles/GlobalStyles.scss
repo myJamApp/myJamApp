@@ -9,6 +9,7 @@
     --textColor: #333;
     --white: #fff;
     --black: black;
+    --hoverColor: #27282f;
 
     // Fonts
     --font-family: 'Lexend Deca', sans-serif;
@@ -78,7 +79,7 @@ a {
     align-items: center;
     border: 1px solid rgba(0, 0, 0, 0.3);
     height: 50px;
-    min-width: 200px;
+    min-width: 100px;
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s ease-in;
@@ -90,4 +91,20 @@ a {
     &:hover {
         background-color: #d2e3fc;
     }
+}
+
+// Scrollbar
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: var(--hoverColor);
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
 }

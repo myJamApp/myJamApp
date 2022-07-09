@@ -6,6 +6,16 @@ import firebase, { auth } from '~/firebase';
 const cx = classNames.bind(styles);
 
 function Login() {
+    const handleSignInGoogle = async () => {
+        const dataGoogle = await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+        console.log({ dataGoogle });
+    };
+
+    const handleSignInFacebook = async () => {
+        const dataFacebook = await auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
+        console.log({ dataFacebook });
+    };
+
     return (
         <div className={cx('login__wrapper')}>
             <div className={cx('login__content')}>
@@ -18,20 +28,14 @@ function Login() {
                     </div>
 
                     <div className={cx('loginButtons')}>
-                        <div
-                            className={cx('googleLogin', { btn: 'btn' })}
-                            onClick={() => auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())}
-                        >
+                        <div className={cx('googleLogin', { btn: 'btn' })} onClick={handleSignInGoogle}>
                             <GoogleIcon />
                             <span>Sign in with Google</span>
                         </div>
 
                         <span>OR</span>
 
-                        <div
-                            className={cx('facebookLogin', { btn: 'btn' })}
-                            onClick={() => auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())}
-                        >
+                        <div className={cx('facebookLogin', { btn: 'btn' })} onClick={handleSignInFacebook}>
                             <FacebookIcon />
                             <span>Sign in with Facebook</span>
                         </div>

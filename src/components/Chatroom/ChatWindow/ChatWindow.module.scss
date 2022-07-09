@@ -1,0 +1,130 @@
+.chatWindow__wrapper {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: #161819;
+}
+
+.chatWindow__container {
+    display: flex;
+    flex-direction: column;
+    // background-color: #161819;
+    width: 90%;
+    height: 100%;
+    // border: 1px solid green;
+    color: var(--white);
+}
+
+// Room Header
+.chatroomHeader {
+    display: flex;
+    width: 100%;
+    height: 56px;
+    align-items: center;
+    justify-content: space-between;
+    margin: 4px 0;
+    // box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+
+    .chatroomName {
+        font-size: 22px;
+    }
+
+    .roomMembers {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .inviteFriend {
+        margin: 0 10px;
+        border-radius: 10px;
+        transition: background-color 0.3s ease-in;
+        border: none;
+        height: 40px;
+
+        &:hover {
+            background-color: var(--hoverColor);
+        }
+    }
+}
+
+// Text Container
+.textContainer {
+    height: calc(100% - 126px);
+    max-height: 100%;
+    overflow: hidden;
+
+    &:hover {
+        overflow-y: overlay;
+        transition: all 0.3s ease-in;
+
+        // Scrollbar
+        &::-webkit-scrollbar {
+            border-radius: 0;
+            width: 8px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 4px;
+            background-color: var(--hoverColor);
+        }
+
+        &::-webkit-scrollbar-track {
+            border-radius: 0;
+            background-color: rgba(0, 0, 0, 0);
+        }
+    }
+}
+
+// Text Input
+.textInput {
+    height: 70px;
+    background-color: #26292f;
+    color: var(--textColor);
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    border-radius: 10px;
+
+    .typeBar {
+        width: calc(100% - 120px);
+        height: 100%;
+        padding: 0 20px;
+    }
+
+    input {
+        height: 100%;
+        width: 100%;
+        background-color: #26292f;
+        color: var(--white);
+
+        &::placeholder {
+            color: var(--white);
+        }
+    }
+
+    .sendBtn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--white);
+        cursor: pointer;
+        background-color: #242525;
+        border-radius: 6px;
+
+        .send {
+            border: none;
+            height: 36px;
+            width: 90px;
+
+            transition: color 0.3s ease-in;
+
+            &:hover {
+                background-color: #242525;
+                color: var(--primaryColor);
+            }
+        }
+    }
+}
