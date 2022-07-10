@@ -58,6 +58,10 @@
     .facebookLogin,
     .googleLogin {
         width: 300px;
+
+        &:hover {
+            background-color: #d2e3fc;
+        }
     }
 
     .googleLogin {

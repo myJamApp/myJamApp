@@ -1,19 +1,37 @@
 import classNames from 'classnames/bind';
 import styles from './Login.module.scss';
 import { GoogleIcon, FacebookIcon } from '~/components/Icons/Icons';
-import firebase, { auth } from '~/firebase';
+import firebase, { auth } from '~/firebase/firebase';
+import { addDocument } from '~/firebase/service';
 
 const cx = classNames.bind(styles);
 
 function Login() {
     const handleSignInGoogle = async () => {
-        const dataGoogle = await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-        console.log({ dataGoogle });
+        const { additionalUserInfo, user } = await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+
+        if (additionalUserInfo?.isNewUser) {
+            addDocument('users', {
+                displayName: user.displayName,
+                email: user.email,
+                photoURL: user.photoURL,
+                uid: user.uid,
+                providerId: additionalUserInfo.providerId,
+            });
+        }
     };
 
     const handleSignInFacebook = async () => {
-        const dataFacebook = await auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
-        console.log({ dataFacebook });
+        const { additionalUserInfo, user } = await auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
+        if (additionalUserInfo?.isNewUser) {
+            addDocument('users', {
+                displayName: user.displayName,
+                email: user.email,
+                photoURL: user.photoURL,
+                uid: user.uid,
+                providerId: additionalUserInfo.providerId,
+            });
+        }
     };
 
     return (
