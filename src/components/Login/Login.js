@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './Login.module.scss';
 import { GoogleIcon, FacebookIcon } from '~/components/Icons/Icons';
 import firebase, { auth } from '~/firebase/firebase';
-import { addDocument } from '~/firebase/service';
+import { addDocument, generateKeywords } from '~/firebase/service';
 
 const cx = classNames.bind(styles);
 
@@ -17,6 +17,7 @@ function Login() {
                 photoURL: user.photoURL,
                 uid: user.uid,
                 providerId: additionalUserInfo.providerId,
+                keywords: generateKeywords(user.displayName),
             });
         }
     };

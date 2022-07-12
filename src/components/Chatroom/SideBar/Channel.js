@@ -1,8 +1,11 @@
 import classNames from 'classnames/bind';
 import { Collapse } from 'antd';
 import styled from 'styled-components';
-import { MessageTwoTone, HighlightTwoTone, CustomerServiceTwoTone, PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
+
 import styles from './SideBar.module.scss';
+import { useContext } from 'react';
+import { AppContext } from '~/Context/AppProvider';
 
 const cx = classNames.bind(styles);
 const { Panel } = Collapse;
@@ -25,40 +28,29 @@ const CollapseStyled = styled(Collapse)`
 `;
 
 function Channel() {
+    const { rooms, setIsAddChannelVisible, setSelectedRoomId } = useContext(AppContext);
+
+    const handleAddChannel = () => {
+        setIsAddChannelVisible(true);
+    };
+
     return (
         <div className={cx('channel')}>
             <CollapseStyled ghost defaultActiveKey={['1']}>
                 <PanelStyled header="CHANNEL" key="1">
                     <div className={cx('roomList')}>
-                        {/* General Chat */}
-                        <div className={cx('generalChat')}>
-                            <div className={cx('roomIcon')}>
-                                <MessageTwoTone />
-                            </div>
-                            <div className={cx('roomName')}>General Chat</div>
-                            <div className={cx('numberMessage')}>12</div>
-                        </div>
-
-                        {/* Design Support */}
-                        <div className={cx('designSupport')}>
-                            <div className={cx('roomIcon')}>
-                                <HighlightTwoTone />
-                            </div>
-                            <div className={cx('roomName')}>Design Support</div>
-                            <div className={cx('numberMessage')}>23</div>
-                        </div>
-
-                        {/* Product Team */}
-                        <div className={cx('productTeam')}>
-                            <div className={cx('roomIcon')}>
-                                <CustomerServiceTwoTone />
-                            </div>
-                            <div className={cx('roomName')}>Product Team</div>
-                            <div className={cx('numberMessage')}>2</div>
-                        </div>
+                        {rooms.map((room, index) => {
+                            return (
+                                <div className={cx('room')} key={index}>
+                                    <div className={cx('roomName')} onClick={() => setSelectedRoomId(room.id)}>
+                                        {room.name}
+                                    </div>
+                                </div>
+                            );
+                        })}
 
                         {/* Add Room */}
-                        <div className={cx('addRoom')}>
+                        <div className={cx('addRoom')} onClick={handleAddChannel}>
                             <div className={cx('iconAdd')}>
                                 <PlusOutlined />
                             </div>

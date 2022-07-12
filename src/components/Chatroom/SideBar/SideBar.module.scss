@@ -143,9 +143,7 @@
         flex-direction: column;
     }
 
-    .generalChat,
-    .designSupport,
-    .productTeam {
+    .room {
         color: var(--white);
         display: flex;
         padding: 10px 10px 10px 10px;
@@ -158,19 +156,11 @@
         }
     }
 
-    .roomIcon {
-        display: flex;
-        flex: 1;
-        justify-content: center;
-        align-items: center;
-        font-size: 20px;
-    }
-
     .roomName {
         display: flex;
         flex: 5;
         font-size: 16px;
-        margin-left: 4px;
+        margin-left: 40px;
     }
 
     .numberMessage {
