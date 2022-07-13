@@ -82,8 +82,6 @@ function InviteFriendModal() {
 
     const [form] = Form.useForm();
 
-    console.log({ valueSearch });
-
     return (
         <Modal
             title="Invite friends to this room"

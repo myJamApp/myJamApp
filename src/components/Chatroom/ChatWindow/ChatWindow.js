@@ -4,12 +4,59 @@ import styles from './ChatWindow.module.scss';
 import { UserAddOutlined } from '@ant-design/icons';
 import Message from './Message';
 import { AppContext } from '~/Context/AppProvider';
-import { useContext } from 'react';
+import { useContext, useMemo, useState } from 'react';
+import { addDocument } from '~/firebase/service';
+import { AuthContext } from '~/Context/AuthProvider';
+import useFireStore from '~/hooks/useFireStore';
+import { formatRelative } from 'date-fns';
 
 const cx = classNames.bind(styles);
 
 function ChatWindow() {
     const { selectedRoom, members, setIsInviteFriendVisible } = useContext(AppContext);
+    const {
+        user: { uid, photoURL, displayName },
+    } = useContext(AuthContext);
+
+    const [inputValue, setInputValue] = useState('');
+
+    const handleOnChange = (e) => {
+        setInputValue(e.target.value);
+    };
+
+    const handleSubmit = () => {
+        addDocument('messages', {
+            text: inputValue,
+            photoURL: photoURL,
+            displayName: displayName,
+            uid: uid,
+            roomId: selectedRoom?.id,
+        });
+
+        setInputValue('');
+    };
+
+    const messagesCondition = useMemo(
+        () => ({
+            fieldName: 'roomId',
+            operator: '==',
+            compareValue: selectedRoom?.id,
+        }),
+        [selectedRoom?.id],
+    );
+
+    const messages = useFireStore('messages', messagesCondition);
+
+    const formatDate = (seconds) => {
+        let formattedDate = '';
+
+        if (seconds) {
+            formattedDate = formatRelative(new Date(seconds * 1000), new Date());
+            formattedDate = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+        }
+
+        return formattedDate;
+    };
 
     return (
         <div className={cx('chatWindow__wrapper')}>
@@ -42,92 +89,32 @@ function ChatWindow() {
 
                     {/* Text Container */}
                     <div className={cx('textContainer')}>
-                        <Message
-                            text="Hey!!"
-                            displayName="Kevin"
-                            photoURL="https://wallpapercave.com/wp/wp10538768.jpg"
-                            createAt="09:23 AM"
-                        />
-
-                        <Message
-                            text="Hello"
-                            displayName="Foden"
-                            photoURL="https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blt4f78cf6a94c0f10d/62250b61ecb10f75e2f3c6ce/Phil_Foden_Manchester_City_2021-22.jpg"
-                            createAt="09:25 AM"
-                        />
-
-                        <Message
-                            text="Hi everyone. I'm new here"
-                            displayName="Haaland"
-                            photoURL="https://media-cdn-v2.laodong.vn/storage/newsportal/2022/6/13/1056092/Haaland-Man-City.jpg"
-                            createAt="09:33 AM"
-                        />
-
-                        <Message
-                            text="Welcome !!"
-                            displayName="Rodri"
-                            photoURL="https://vcdn-ngoisao.vnecdn.net/2021/11/02/rodrigo3-6894-1635830293.jpg"
-                            createAt="09:40 AM"
-                        />
-
-                        <Message
-                            text="Welcome !!"
-                            displayName="Rodri"
-                            photoURL="https://vcdn-ngoisao.vnecdn.net/2021/11/02/rodrigo3-6894-1635830293.jpg"
-                            createAt="09:40 AM"
-                        />
-                        <Message
-                            text="Welcome !!"
-                            displayName="Rodri"
-                            photoURL="https://vcdn-ngoisao.vnecdn.net/2021/11/02/rodrigo3-6894-1635830293.jpg"
-                            createAt="09:40 AM"
-                        />
-                        <Message
-                            text="Welcome !!"
-                            displayName="Rodri"
-                            photoURL="https://vcdn-ngoisao.vnecdn.net/2021/11/02/rodrigo3-6894-1635830293.jpg"
-                            createAt="09:40 AM"
-                        />
-                        <Message
-                            text="Welcome !!"
-                            displayName="Rodri"
-                            photoURL="https://vcdn-ngoisao.vnecdn.net/2021/11/02/rodrigo3-6894-1635830293.jpg"
-                            createAt="09:40 AM"
-                        />
-                        <Message
-                            text="Welcome !!"
-                            displayName="Rodri"
-                            photoURL="https://vcdn-ngoisao.vnecdn.net/2021/11/02/rodrigo3-6894-1635830293.jpg"
-                            createAt="09:40 AM"
-                        />
-                        <Message
-                            text="Welcome !!"
-                            displayName="Rodri"
-                            photoURL="https://vcdn-ngoisao.vnecdn.net/2021/11/02/rodrigo3-6894-1635830293.jpg"
-                            createAt="09:40 AM"
-                        />
-                        <Message
-                            text="Welcome !!"
-                            displayName="Rodri"
-                            photoURL="https://vcdn-ngoisao.vnecdn.net/2021/11/02/rodrigo3-6894-1635830293.jpg"
-                            createAt="09:40 AM"
-                        />
-                        <Message
-                            text="Welcome !!"
-                            displayName="Rodri"
-                            photoURL="https://vcdn-ngoisao.vnecdn.net/2021/11/02/rodrigo3-6894-1635830293.jpg"
-                            createAt="09:40 AM"
-                        />
+                        {messages.map((message) => (
+                            <Message
+                                key={message.id}
+                                text={message.text}
+                                displayName={message.displayName}
+                                photoURL={message.photoURL}
+                                createAt={formatDate(message.createAt?.seconds)}
+                            />
+                        ))}
                     </div>
 
                     {/* Text Input */}
                     <div className={cx('textInput')}>
                         <div className={cx('typeBar')}>
-                            <input type="text" placeholder="Type something ...." />
+                            <input
+                                type="text"
+                                placeholder="Type something ...."
+                                onChange={handleOnChange}
+                                value={inputValue}
+                            />
                         </div>
 
                         <div className={cx('sendBtn')}>
-                            <div className={cx('send', { btn: true })}>Send</div>
+                            <div className={cx('send', { btn: true })} onClick={handleSubmit}>
+                                Send
+                            </div>
                         </div>
                     </div>
                 </div>
