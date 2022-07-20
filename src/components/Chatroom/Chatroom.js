@@ -1,9 +1,14 @@
 import { Col, Row } from 'antd';
-// import ChatMedia from './ChatMedia/ChatMedia';
-import ChatWindow from './ChatWindow/ChatWindow';
 import 'antd/dist/antd.css';
-import SideBar from './SideBar/SideBar';
 import styled from 'styled-components';
+
+import ChatWindow from './ChatWindow/ChatWindow';
+import SideBar from './SideBar/SideBar';
+import useViewport from '~/hooks/useViewport';
+import { AppContext } from '~/Context/AppProvider';
+import { useContext } from 'react';
+
+// import ChatMedia from './ChatMedia/ChatMedia';
 
 const SideBarStyled = styled.div`
     &&& {
@@ -14,6 +19,35 @@ const SideBarStyled = styled.div`
 `;
 
 function Chatroom() {
+    const { sideBarVisible } = useContext(AppContext);
+
+    const viewPort = useViewport();
+    const tabletAndMobile = viewPort.width <= 768;
+
+    if (tabletAndMobile && sideBarVisible) {
+        return (
+            <SideBarStyled>
+                <Row>
+                    <Col span={24}>
+                        <SideBar />
+                    </Col>
+                </Row>
+            </SideBarStyled>
+        );
+    }
+
+    if (tabletAndMobile && !sideBarVisible) {
+        return (
+            <SideBarStyled>
+                <Row>
+                    <Col span={24}>
+                        <ChatWindow />
+                    </Col>
+                </Row>
+            </SideBarStyled>
+        );
+    }
+
     return (
         <SideBarStyled>
             <Row>

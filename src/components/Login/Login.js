@@ -31,6 +31,7 @@ function Login() {
                 photoURL: user.photoURL,
                 uid: user.uid,
                 providerId: additionalUserInfo.providerId,
+                keywords: generateKeywords(user.displayName),
             });
         }
     };

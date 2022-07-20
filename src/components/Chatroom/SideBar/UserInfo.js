@@ -1,7 +1,8 @@
 import { EllipsisOutlined } from '@ant-design/icons';
-import { Avatar } from 'antd';
+import { Avatar, Popover } from 'antd';
 import classNames from 'classnames/bind';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+import { AppContext } from '~/Context/AppProvider';
 import { AuthContext } from '~/Context/AuthProvider';
 
 import styles from './SideBar.module.scss';
@@ -12,6 +13,23 @@ function UserInfo() {
     const {
         user: { displayName, photoURL },
     } = useContext(AuthContext);
+
+    const { setIsUserProfileVisible, setNewUserName, setNewUserAvatar } = useContext(AppContext);
+
+    const [userEditVisible, setUserEditVisible] = useState(false);
+
+    const handleUserEdit = () => {
+        setUserEditVisible(!userEditVisible);
+    };
+
+    const handleEditProfile = () => {
+        setNewUserName(displayName);
+        setNewUserAvatar(photoURL);
+
+        setUserEditVisible(!userEditVisible);
+
+        setIsUserProfileVisible(true);
+    };
 
     return (
         <div className={cx('userInfo')}>
@@ -24,9 +42,16 @@ function UserInfo() {
                 <h1>{displayName}</h1>
                 <span>Active for chat</span>
             </div>
-            <div className={cx('userOptions')}>
-                <EllipsisOutlined />
-            </div>
+            <Popover
+                content={<div onClick={handleEditProfile}>Edit Your Profile</div>}
+                trigger="click"
+                visible={userEditVisible}
+                onVisibleChange={handleUserEdit}
+            >
+                <div className={cx('userOptions')}>
+                    <EllipsisOutlined />
+                </div>
+            </Popover>
         </div>
     );
 }

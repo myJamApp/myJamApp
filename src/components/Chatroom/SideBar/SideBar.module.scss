@@ -81,8 +81,18 @@
     .userOptions {
         display: flex;
         flex: 1;
+        min-height: 20px;
+        height: 30px;
+        border-radius: 14px;
+        align-items: center;
         justify-content: center;
         color: var(--white);
+        cursor: pointer;
+        transition: background-color 0.3s ease-in;
+
+        &:hover {
+            background-color: #3e3f4b;
+        }
     }
 }
 

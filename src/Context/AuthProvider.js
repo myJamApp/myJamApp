@@ -18,12 +18,13 @@ function AuthProvider({ children }) {
                 setUser({ displayName, email, uid, photoURL });
 
                 setIsLoading(false);
-                navigate('/', { replace: true });
+                navigate('/', { replace: false });
+
                 return;
             }
 
             setIsLoading(false);
-            navigate('/login', { replace: true });
+            navigate('/login', { replace: false });
         });
 
         return () => {

@@ -1,3 +1,10 @@
+@import '../GlobalStyles/responsive.scss';
+
+:root {
+    --gapTwoSides: 156px;
+    --gapTwoBtn: 132px;
+}
+
 .login__wrapper {
     display: flex;
     justify-content: center;
@@ -8,7 +15,8 @@
 
 .login__content {
     height: 500px;
-    width: 880px;
+    width: calc(100% - var(--gapTwoSides));
+    max-width: 880px;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 6px;
     position: relative;
@@ -22,12 +30,25 @@
         top: 20px;
         left: 70px;
     }
+
+    @include tablet {
+        min-width: 420px;
+        min-height: 690px;
+        width: 450px;
+        height: 690px;
+    }
+
+    @include mobile {
+        width: 380px;
+        height: 650px;
+    }
 }
 
 .login__section {
     display: flex;
     flex-direction: column;
     height: 66%;
+    width: calc(100% - var(--gapTwoBtn));
     align-items: center;
     justify-content: space-evenly;
     position: relative;
@@ -47,17 +68,31 @@
 
 .loginButtons {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
 
     span {
         margin: 0 20px;
+        font-size: 2.1vh;
+    }
+
+    @include tablet {
+        flex-direction: column;
+        justify-content: space-evenly;
+        height: 210px;
+    }
+
+    @include mobile {
+        flex-direction: column;
+        justify-content: space-evenly;
+        height: 210px;
     }
 
     .facebookLogin,
     .googleLogin {
         width: 300px;
+        font-size: 2.16vh;
 
         &:hover {
             background-color: #d2e3fc;

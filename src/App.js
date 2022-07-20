@@ -6,6 +6,7 @@ import AuthProvider from './Context/AuthProvider';
 import AppProvider from './Context/AppProvider';
 import AddChannelModal from './components/Modals/AddChannelModal';
 import InviteFriendModal from './components/Modals/InviteFriendModal';
+import EditUserModal from './components/Modals/EditUserModal';
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                         </Routes>
                         <AddChannelModal />
                         <InviteFriendModal />
+                        <EditUserModal />
                     </AppProvider>
                 </AuthProvider>
             </Router>

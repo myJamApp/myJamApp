@@ -32,6 +32,10 @@ body {
     line-height: 1.5;
     text-rendering: optimizeSpeed;
     color: var(--textColor);
+
+    .ant-popover-inner-content {
+        cursor: pointer;
+    }
 }
 
 button,

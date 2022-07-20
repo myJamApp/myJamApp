@@ -6,6 +6,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import styles from './SideBar.module.scss';
 import { useContext } from 'react';
 import { AppContext } from '~/Context/AppProvider';
+import useViewport from '~/hooks/useViewport';
 
 const cx = classNames.bind(styles);
 const { Panel } = Collapse;
@@ -28,20 +29,63 @@ const CollapseStyled = styled(Collapse)`
 `;
 
 function Channel() {
-    const { rooms, setIsAddChannelVisible, setSelectedRoomId } = useContext(AppContext);
+    const { rooms, setIsAddChannelVisible, setSelectedRoomId, setChatWindowVisible, setSideBarVisible } =
+        useContext(AppContext);
 
+    const viewPort = useViewport();
+
+    // Logic
     const handleAddChannel = () => {
         setIsAddChannelVisible(true);
     };
 
+    // Tablet and mobile part
+    if (viewPort.width <= 768) {
+        return (
+            <div className={cx('channel')}>
+                <CollapseStyled ghost defaultActiveKey={['1']}>
+                    <PanelStyled header="CHANNEL" key="1">
+                        <div className={cx('roomList')}>
+                            {rooms.map((room) => {
+                                return (
+                                    <div className={cx('room')} key={room.id}>
+                                        <div
+                                            className={cx('roomName')}
+                                            onClick={() => {
+                                                setSelectedRoomId(room.id);
+
+                                                setSideBarVisible(false);
+                                            }}
+                                        >
+                                            {room.name}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+
+                            {/* Add Room */}
+                            <div className={cx('addRoom')} onClick={handleAddChannel}>
+                                <div className={cx('iconAdd')}>
+                                    <PlusOutlined />
+                                </div>
+                                <span>Add Channel</span>
+                            </div>
+                        </div>
+                    </PanelStyled>
+                </CollapseStyled>
+            </div>
+        );
+    }
+
+    // Desktop part
     return (
         <div className={cx('channel')}>
             <CollapseStyled ghost defaultActiveKey={['1']}>
                 <PanelStyled header="CHANNEL" key="1">
                     <div className={cx('roomList')}>
-                        {rooms.map((room, index) => {
+                        {rooms.map((room) => {
                             return (
-                                <div className={cx('room')} key={index}>
+                                <div className={cx('room')} key={room.id}>
                                     <div className={cx('roomName')} onClick={() => setSelectedRoomId(room.id)}>
                                         {room.name}
                                     </div>
