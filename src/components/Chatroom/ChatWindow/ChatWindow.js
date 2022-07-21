@@ -4,7 +4,7 @@ import styles from './ChatWindow.module.scss';
 import { UserAddOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import Message from './Message';
 import { AppContext } from '~/Context/AppProvider';
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { addDocument } from '~/firebase/service';
 import { AuthContext } from '~/Context/AuthProvider';
 import useFireStore from '~/hooks/useFireStore';
@@ -14,16 +14,24 @@ import useViewport from '~/hooks/useViewport';
 const cx = classNames.bind(styles);
 
 function ChatWindow() {
-    const { selectedRoom, members, setIsInviteFriendVisible, setSideBarVisible } = useContext(AppContext);
+    const { selectedRoom, members, setIsInviteFriendVisible, setSideBarVisible, selectedRoomId } =
+        useContext(AppContext);
     const {
         user: { uid, photoURL, displayName },
     } = useContext(AuthContext);
+
+    const textRef = useRef();
+    const messageComponentRef = useRef();
 
     const [inputValue, setInputValue] = useState('');
 
     const handleOnChange = (e) => {
         setInputValue(e.target.value);
     };
+
+    useEffect(() => {
+        setInputValue('');
+    }, [selectedRoomId]);
 
     const handleSubmit = () => {
         addDocument('messages', {
@@ -35,6 +43,13 @@ function ChatWindow() {
         });
 
         setInputValue('');
+        textRef.current.focus();
+    };
+
+    const handeleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleSubmit();
+        }
     };
 
     const messagesCondition = useMemo(
@@ -102,15 +117,20 @@ function ChatWindow() {
 
                         {/* Text Container */}
                         <div className={cx('textContainer')}>
-                            {messages.map((message) => (
-                                <Message
-                                    key={message.id}
-                                    text={message.text}
-                                    displayName={message.displayName}
-                                    photoURL={message.photoURL}
-                                    createAt={formatDate(message.createAt?.seconds)}
-                                />
-                            ))}
+                            {messages.map((message) => {
+                                return (
+                                    <div key={message.id}>
+                                        <Message
+                                            key={message.id}
+                                            text={message.text}
+                                            displayName={message.displayName}
+                                            photoURL={message.photoURL}
+                                            createAt={formatDate(message.createAt?.seconds)}
+                                        />
+                                        <div ref={messageComponentRef}></div>
+                                    </div>
+                                );
+                            })}
                         </div>
 
                         {/* Text Input */}
@@ -121,6 +141,7 @@ function ChatWindow() {
                                     placeholder="Type something ...."
                                     onChange={handleOnChange}
                                     value={inputValue}
+                                    ref={textRef}
                                 />
                             </div>
 
@@ -178,13 +199,16 @@ function ChatWindow() {
                     {/* Text Container */}
                     <div className={cx('textContainer')}>
                         {messages.map((message) => (
-                            <Message
-                                key={message.id}
-                                text={message.text}
-                                displayName={message.displayName}
-                                photoURL={message.photoURL}
-                                createAt={formatDate(message.createAt?.seconds)}
-                            />
+                            <div key={message.id}>
+                                <Message
+                                    key={message.id}
+                                    text={message.text}
+                                    displayName={message.displayName}
+                                    photoURL={message.photoURL}
+                                    createAt={formatDate(message.createAt?.seconds)}
+                                />
+                                <div ref={messageComponentRef}></div>
+                            </div>
                         ))}
                     </div>
 
@@ -196,6 +220,8 @@ function ChatWindow() {
                                 placeholder="Type something ...."
                                 onChange={handleOnChange}
                                 value={inputValue}
+                                ref={textRef}
+                                onKeyDown={handeleKeyDown}
                             />
                         </div>
 

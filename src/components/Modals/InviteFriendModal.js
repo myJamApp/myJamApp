@@ -43,7 +43,7 @@ const DebounceSelect = ({ fetchOptions, debounceTimeOut = 300, curMembers, ...pr
 };
 
 const fetchUserList = async (search, curMembers) => {
-    return db
+    return await db
         .collection('users')
         .where('keywords', 'array-contains', search)
         .orderBy('displayName')

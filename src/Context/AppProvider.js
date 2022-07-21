@@ -12,13 +12,19 @@ function AppProvider({ children }) {
         user: { uid, displayName, photoURL },
     } = useContext(AuthContext);
 
+    // Add channel modal
     const [isAddChannelVisible, setIsAddChannelVisible] = useState(false);
+
+    // Invite friend modal
     const [isInviteFriendVisible, setIsInviteFriendVisible] = useState(false);
-    const [isUserProfileVisible, setIsUserProfileVisible] = useState(false);
-    const [newUserName, setNewUserName] = useState(displayName);
-    const [newUserAvatar, setNewUserAvatar] = useState(photoURL);
+
+    // Remove channel modal
+    const [removeChannelModalVisible, setRemoveChannelModalVisible] = useState(false);
+
+    // Visibility for responsive
     const [sideBarVisible, setSideBarVisible] = useState(true);
 
+    // Selected channel
     const [selectedRoomId, setSelectedRoomId] = useState('');
 
     const roomsCondition = useMemo(() => {
@@ -44,6 +50,11 @@ function AppProvider({ children }) {
     }, [selectedRoom?.members]);
 
     const members = useFireStore('users', usersCondition);
+
+    // Edit user's profile
+    const [isUserProfileVisible, setIsUserProfileVisible] = useState(false);
+    const [newUserName, setNewUserName] = useState(displayName);
+    const [newUserAvatar, setNewUserAvatar] = useState(photoURL);
 
     const userProfileCondition = useMemo(() => {
         return {
@@ -82,6 +93,17 @@ function AppProvider({ children }) {
         });
     };
 
+    // Delete all rooms with no members
+
+    db.collection('room')
+        .where('members', '==', [])
+        .get()
+        .then((snapshot) => {
+            return snapshot.docs.forEach((doc) => {
+                db.collection('room').doc(doc.id).delete();
+            });
+        });
+
     return (
         <AppContext.Provider
             value={{
@@ -109,6 +131,8 @@ function AppProvider({ children }) {
                 setNewUserAvatar,
                 sideBarVisible,
                 setSideBarVisible,
+                removeChannelModalVisible,
+                setRemoveChannelModalVisible,
             }}
         >
             {children}

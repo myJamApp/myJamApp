@@ -40,8 +40,8 @@ function AddChannelModal() {
                 <Form.Item label="Name" name="name">
                     <Input placeholder="Set name for your channel" />
                 </Form.Item>
-                <Form.Item label="Description" name="description">
-                    <Input.TextArea placeholder="Write something about your channel" />
+                <Form.Item label="Avatar" name="avatar">
+                    <Input.TextArea autoSize placeholder="Paste this group's avatar URL here..." />
                 </Form.Item>
             </Form>
         </Modal>

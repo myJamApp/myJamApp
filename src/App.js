@@ -7,6 +7,7 @@ import AppProvider from './Context/AppProvider';
 import AddChannelModal from './components/Modals/AddChannelModal';
 import InviteFriendModal from './components/Modals/InviteFriendModal';
 import EditUserModal from './components/Modals/EditUserModal';
+import RemoveChannelModal from './components/Modals/RemoveChannelModal';
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                         <AddChannelModal />
                         <InviteFriendModal />
                         <EditUserModal />
+                        <RemoveChannelModal />
                     </AppProvider>
                 </AuthProvider>
             </Router>

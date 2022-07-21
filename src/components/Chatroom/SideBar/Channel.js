@@ -1,10 +1,10 @@
 import classNames from 'classnames/bind';
-import { Collapse } from 'antd';
+import { Collapse, Popover, Avatar } from 'antd';
 import styled from 'styled-components';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, EllipsisOutlined } from '@ant-design/icons';
 
 import styles from './SideBar.module.scss';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AppContext } from '~/Context/AppProvider';
 import useViewport from '~/hooks/useViewport';
 
@@ -29,14 +29,28 @@ const CollapseStyled = styled(Collapse)`
 `;
 
 function Channel() {
-    const { rooms, setIsAddChannelVisible, setSelectedRoomId, setChatWindowVisible, setSideBarVisible } =
+    const { rooms, setIsAddChannelVisible, setSelectedRoomId, setSideBarVisible, setRemoveChannelModalVisible } =
         useContext(AppContext);
 
     const viewPort = useViewport();
 
-    // Logic
+    const [removeChannelVisible, setRemoveChannelVisible] = useState(false);
+
+    // console.log(selectedRoomId);
+
+    // Add channel
     const handleAddChannel = () => {
         setIsAddChannelVisible(true);
+    };
+
+    // Remove Channel
+    const handleRemoveChannel = () => {
+        setRemoveChannelVisible(!removeChannelVisible);
+    };
+
+    const handleOpenRemoveChannelModal = (roomId) => {
+        setSelectedRoomId(roomId);
+        setRemoveChannelModalVisible(true);
     };
 
     // Tablet and mobile part
@@ -49,6 +63,10 @@ function Channel() {
                             {rooms.map((room) => {
                                 return (
                                     <div className={cx('room')} key={room.id}>
+                                        <Avatar shape="square" src={room.avatar}>
+                                            {room.avatar ? '' : room.name.charAt(0).toUpperCase()}
+                                        </Avatar>
+
                                         <div
                                             className={cx('roomName')}
                                             onClick={() => {
@@ -59,6 +77,22 @@ function Channel() {
                                         >
                                             {room.name}
                                         </div>
+
+                                        <Popover
+                                            key={room.id}
+                                            content={
+                                                <div onClick={() => handleOpenRemoveChannelModal(room.id)}>
+                                                    Remove this channel
+                                                </div>
+                                            }
+                                            trigger="click"
+                                            zIndex="0"
+                                            onVisibleChange={handleRemoveChannel}
+                                        >
+                                            <div className={cx('removeChannelOption')}>
+                                                <EllipsisOutlined />
+                                            </div>
+                                        </Popover>
                                     </div>
                                 );
                             })}
@@ -86,9 +120,29 @@ function Channel() {
                         {rooms.map((room) => {
                             return (
                                 <div className={cx('room')} key={room.id}>
+                                    <Avatar shape="square" src={room.avatar}>
+                                        {room.avatar ? '' : room.name.charAt(0).toUpperCase()}
+                                    </Avatar>
+
                                     <div className={cx('roomName')} onClick={() => setSelectedRoomId(room.id)}>
                                         {room.name}
                                     </div>
+
+                                    <Popover
+                                        key={room.id}
+                                        content={
+                                            <div onClick={() => handleOpenRemoveChannelModal(room.id)}>
+                                                Remove this channel
+                                            </div>
+                                        }
+                                        trigger="click"
+                                        zIndex="0"
+                                        onVisibleChange={handleRemoveChannel}
+                                    >
+                                        <div className={cx('removeChannelOption')}>
+                                            <EllipsisOutlined />
+                                        </div>
+                                    </Popover>
                                 </div>
                             );
                         })}
