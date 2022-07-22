@@ -40,6 +40,7 @@ function ChatWindow() {
             displayName: displayName,
             uid: uid,
             roomId: selectedRoom?.id,
+            roomRemoved: false,
         });
 
         setInputValue('');

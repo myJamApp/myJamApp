@@ -104,6 +104,16 @@ function AppProvider({ children }) {
             });
         });
 
+    // Delete all messages of removed rooms
+    db.collection('messages')
+        .where('roomRemoved', '==', true)
+        .get()
+        .then((snapshot) => {
+            return snapshot.docs.forEach((doc) => {
+                db.collection('messages').doc(doc.id).delete();
+            });
+        });
+
     return (
         <AppContext.Provider
             value={{

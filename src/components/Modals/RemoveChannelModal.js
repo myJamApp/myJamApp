@@ -19,6 +19,17 @@ function RemoveChannelModal() {
         roomRef.update({
             members: [...selectedRoom?.members.filter((member) => member !== uid)],
         });
+
+        db.collection('messages')
+            .where('roomId', '==', selectedRoomId)
+            .get()
+            .then((snapshot) => {
+                return snapshot.docs.forEach((doc) => {
+                    db.collection('messages').doc(doc.id).update({
+                        roomRemoved: true,
+                    });
+                });
+            });
     };
 
     const handleCancel = () => {
