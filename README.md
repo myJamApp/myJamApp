@@ -2,15 +2,15 @@
 
 link demo: https://litchat-f3a3d.web.app/
 
-##Members:
+### Members:
 01 (Personal self-taught project), managing source code with
 Github
 
-##Technologies: 
+### Technologies: 
 - Front-end: React.JS, SCSS, Ant Design, Styled-Components
 - Back-end: Firebase
 
-##Description:
+### Description:
 - CRUD user's information, chat rooms,...
 - Invite other users to the chat rooms.
 - Chat real-time.
